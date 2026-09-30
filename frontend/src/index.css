@@ -362,6 +362,8 @@ h4.sec{
   scrollbar-width:none;-webkit-overflow-scrolling:touch;
 }
 .chips::-webkit-scrollbar{display:none}
+/* filter rows: wrap onto more lines so longer translations don't hide chips off-screen */
+.chips.wrap{flex-wrap:wrap;overflow-x:visible;row-gap:7px}
 .chip{
   flex:none;padding:6px 13px;border-radius:99px;background:var(--surface);
   font-size:14px;font-weight:400;color:var(--label);text-transform:capitalize;
@@ -831,6 +833,9 @@ h4.sec{
   display:flex;flex-direction:column;gap:9px;
 }
 .steps-list::marker{color:var(--label-3)}
+.howto{margin:0 0 14px;padding:10px 12px;border-radius:var(--r-lg);background:var(--surface)}
+.howto>summary{cursor:pointer;font-size:14px;color:var(--label-2);list-style-position:inside}
+.howto[open]>summary{margin-bottom:10px}
 
 /* --- month calendar --- */
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:10px}
