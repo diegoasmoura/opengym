@@ -7,7 +7,7 @@
 # esbuild/rollup's native binaries. Self-hosters build on the machine that runs the
 # image, so the flag is unnecessary here — buildx users can opt in via
 # `--build-arg`/compose `platforms` instead.
-FROM node:22-alpine AS build
+FROM node:26-alpine AS build
 WORKDIR /app
 
 COPY frontend/package.json frontend/package-lock.json* ./
