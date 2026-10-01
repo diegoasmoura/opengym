@@ -1,11 +1,13 @@
 # Multi-stage: build the React app, then serve it with nginx.
 #
-# --platform=$BUILDPLATFORM pins the build stage to the host's native arch even when
-# cross-building (e.g. amd64 host building an arm64 image). The output is
-# arch-independent, and QEMU-emulated npm installs are known to corrupt esbuild/rollup's
-# platform-specific native binaries, which breaks `vite build` with unrelated-looking
-# module-resolution errors.
-FROM --platform=$BUILDPLATFORM node:22-alpine AS build
+# Deliberately plain FROM: the classic builder (Docker/Compose without buildx, which is
+# what a Synology NAS runs) cannot expand $BUILDPLATFORM and fails with
+# "failed to parse platform". $BUILDPLATFORM only matters when cross-building (e.g. amd64
+# host producing an arm64 image) to avoid QEMU-emulated npm installs corrupting
+# esbuild/rollup's native binaries. Self-hosters build on the machine that runs the
+# image, so the flag is unnecessary here — buildx users can opt in via
+# `--build-arg`/compose `platforms` instead.
+FROM node:22-alpine AS build
 WORKDIR /app
 
 COPY frontend/package.json frontend/package-lock.json* ./
